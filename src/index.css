@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Custom Tianzige grid for Chinese character writing practice */
+.tianzige-grid {
+  background-image: 
+    linear-gradient(to right, rgba(220, 38, 38, 0.2) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(220, 38, 38, 0.2) 1px, transparent 1px),
+    linear-gradient(45deg, transparent calc(50% - 0.5px), rgba(220, 38, 38, 0.15) 50%, transparent calc(50% + 0.5px)),
+    linear-gradient(-45deg, transparent calc(50% - 0.5px), rgba(220, 38, 38, 0.15) 50%, transparent calc(50% + 0.5px));
+  background-size: 50% 50%, 50% 50%, 100% 100%, 100% 100%;
+}
+
+/* 3D Flashcard flip utility */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}

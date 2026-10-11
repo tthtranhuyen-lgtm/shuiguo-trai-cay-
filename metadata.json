@@ -1,0 +1,6 @@
+{
+  "name": "Học Tiếng Trung - Trái Cây 水果",
+  "description": "Ứng dụng tương tác học từ vựng, ngữ pháp, bài khóa và hội thoại đi chợ mua hoa quả tiếng Trung với phát âm chuẩn, trò chơi ôn tập và bảng luyện viết chữ Hán.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
