@@ -34,8 +34,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body class="bg-amber-50/30 text-stone-800 antialiased selection:bg-emerald-200 selection:text-emerald-900 min-h-screen">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="root">
+      <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: system-ui, -apple-system, sans-serif; background: #fffdf5; color: #1c1917;">
+        <div style="text-align: center; padding: 24px; max-width: 440px;">
+          <div style="font-size: 44px; margin-bottom: 12px; animation: bounce 1s infinite alternate;">🍎 水果</div>
+          <div style="font-size: 18px; font-weight: 700; color: #047857; margin-bottom: 6px;">Đang tải ứng dụng Tiếng Trung Trái Cây...</div>
+          <div id="loading-hint" style="font-size: 13px; color: #78716c; margin-bottom: 16px;">Vui lòng đợi trong giây lát</div>
+          <a id="loading-docs-btn" href="./docs/" style="display: none; padding: 10px 20px; background: #059669; color: white; border-radius: 12px; font-weight: 600; text-decoration: none; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(5,150,105,0.2);">👉 Mở ứng dụng (Bản Docs)</a>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./src/main.tsx"></script>
+    <script>
+      // Fallback for static hosting (e.g. GitHub Pages root deployment)
+      // If TypeScript module fails to mount React within 1.2s, dynamically load the compiled bundle
+      setTimeout(function() {
+        var root = document.getElementById('root');
+        var hint = document.getElementById('loading-hint');
+        if (hint && root && root.contains(hint)) {
+          console.warn('Dev module not executed. Loading pre-compiled production bundle...');
+          
+          if (!document.querySelector('link[href*="index.css"]')) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.crossOrigin = 'anonymous';
+            link.href = './assets/index.css';
+            document.head.appendChild(link);
+          }
+
+          if (!document.querySelector('script[src*="index.js"]')) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.crossOrigin = 'anonymous';
+            script.src = './assets/index.js';
+            document.body.appendChild(script);
+          }
+
+          var btn = document.getElementById('loading-docs-btn');
+          if (btn) {
+            btn.style.display = 'inline-block';
+          }
+        }
+      }, 1200);
+    </script>
   </body>
 </html>
 

@@ -10,51 +10,67 @@ class SpeechEngine {
   private audioCtx: AudioContext | null = null;
 
   constructor() {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      this.synth = window.speechSynthesis;
-      this.initVoices();
-      if (this.synth.onvoiceschanged !== undefined) {
-        this.synth.onvoiceschanged = () => this.initVoices();
+    try {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis) {
+        this.synth = window.speechSynthesis;
+        this.initVoices();
+        if (this.synth && 'onvoiceschanged' in this.synth) {
+          this.synth.onvoiceschanged = () => this.initVoices();
+        }
       }
+    } catch (e) {
+      console.warn('SpeechSynthesis unavailable:', e);
     }
   }
 
   private initVoices() {
-    if (!this.synth) return;
-    this.voices = this.synth.getVoices();
-    // Prioritize natural neural / high-quality Chinese voices
-    const chineseVoices = this.voices.filter(v => 
-      v.lang.startsWith('zh') || v.lang.includes('cmn') || v.lang.includes('mandarin')
-    );
-    
-    // Preference order: Google 普通话, Microsoft Xiaoxiao/Yunxi, Ting-Ting, Sin-ji, or any zh-CN
-    const preferredVoice = chineseVoices.find(v => 
-      v.name.includes('Google') || 
-      v.name.includes('Xiaoxiao') || 
-      v.name.includes('Yunxi') ||
-      v.name.includes('Ting-Ting') ||
-      v.name.includes('Natural')
-    ) || chineseVoices.find(v => v.lang === 'zh-CN') || chineseVoices[0];
+    try {
+      if (!this.synth) return;
+      this.voices = this.synth.getVoices() || [];
+      // Prioritize natural neural / high-quality Chinese voices
+      const chineseVoices = this.voices.filter(v => 
+        v && typeof v.lang === 'string' && (v.lang.startsWith('zh') || v.lang.includes('cmn') || v.lang.includes('mandarin'))
+      );
+      
+      // Preference order: Google 普通话, Microsoft Xiaoxiao/Yunxi, Ting-Ting, Sin-ji, or any zh-CN
+      const preferredVoice = chineseVoices.find(v => 
+        v && typeof v.name === 'string' && (
+          v.name.includes('Google') || 
+          v.name.includes('Xiaoxiao') || 
+          v.name.includes('Yunxi') ||
+          v.name.includes('Ting-Ting') ||
+          v.name.includes('Natural')
+        )
+      ) || chineseVoices.find(v => v && v.lang === 'zh-CN') || chineseVoices[0];
 
-    if (preferredVoice) {
-      this.selectedVoice = preferredVoice;
+      if (preferredVoice) {
+        this.selectedVoice = preferredVoice;
+      }
+    } catch (e) {
+      console.warn('initVoices error:', e);
     }
   }
 
   public getAvailableChineseVoices(): SpeechSynthesisVoice[] {
-    if (!this.synth) return [];
-    return this.synth.getVoices().filter(v => 
-      v.lang.startsWith('zh') || v.lang.includes('cmn')
-    );
+    try {
+      if (!this.synth) return [];
+      return (this.synth.getVoices() || []).filter(v => 
+        v && typeof v.lang === 'string' && (v.lang.startsWith('zh') || v.lang.includes('cmn'))
+      );
+    } catch {
+      return [];
+    }
   }
 
   public setVoice(voiceName: string) {
-    const v = this.voices.find(item => item.name === voiceName);
-    if (v) this.selectedVoice = v;
+    try {
+      const v = this.voices.find(item => item && item.name === voiceName);
+      if (v) this.selectedVoice = v;
+    } catch {}
   }
 
   public getSelectedVoiceName(): string {
-    return this.selectedVoice ? this.selectedVoice.name : 'Mặc định (zh-CN)';
+    return this.selectedVoice && this.selectedVoice.name ? this.selectedVoice.name : 'Mặc định (zh-CN)';
   }
 
   public speak(text: string, rate: number = 0.82, onEnd?: () => void) {
