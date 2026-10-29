@@ -14,33 +14,80 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả táo 苹果">
           <defs>
-            <radialGradient id="appleGrad" cx="35%" cy="35%" r="65%">
-              <stop offset="0%" stopColor="#ff4d4d" />
-              <stop offset="60%" stopColor="#d91e18" />
-              <stop offset="100%" stopColor="#960018" />
+            {/* Rich multi-stop radial gradient for realistic ripe apple blush */}
+            <radialGradient id="appleBodyGrad" cx="38%" cy="32%" r="68%">
+              <stop offset="0%" stopColor="#ff6b6b" />
+              <stop offset="25%" stopColor="#ef4444" />
+              <stop offset="60%" stopColor="#dc2626" />
+              <stop offset="85%" stopColor="#991b1b" />
+              <stop offset="100%" stopColor="#580808" />
             </radialGradient>
-            <linearGradient id="appleLeaf" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#4ade80" />
-              <stop offset="100%" stopColor="#15803d" />
+            {/* Golden-yellow natural blush near stem cavity */}
+            <radialGradient id="appleCavityGlow" cx="50%" cy="30%" r="40%">
+              <stop offset="0%" stopColor="#fef08a" stopOpacity="0.85" />
+              <stop offset="50%" stopColor="#facc15" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
+            </radialGradient>
+            {/* Natural curved wooden stem gradient */}
+            <linearGradient id="appleStemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#854d0e" />
+              <stop offset="50%" stopColor="#543310" />
+              <stop offset="100%" stopColor="#2e1906" />
             </linearGradient>
-            <filter id="shadowApple" x="-10%" y="-10%" width="120%" height="130%">
-              <feDropShadow dx="0" dy="6" stdDeviation="6" floodOpacity="0.18" />
+            {/* Vivid leaf with natural vein lighting */}
+            <linearGradient id="appleLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#86efac" />
+              <stop offset="35%" stopColor="#22c55e" />
+              <stop offset="100%" stopColor="#14532d" />
+            </linearGradient>
+            <filter id="appleSoftShadow" x="-20%" y="-20%" width="140%" height="150%">
+              <feDropShadow dx="0" dy="8" stdDeviation="7" floodColor="#7f1d1d" floodOpacity="0.22" />
             </filter>
           </defs>
-          <ellipse cx="80" cy="142" rx="42" ry="10" fill="#000" opacity="0.08" />
-          {/* Stem */}
-          <path d="M80 50 Q83 24 94 18" stroke="#5c3818" strokeWidth="6" strokeLinecap="round" fill="none" />
-          {/* Leaf */}
-          <path d="M84 40 Q110 26 118 42 Q105 52 84 40 Z" fill="url(#appleLeaf)" filter="url(#shadowApple)" />
-          {/* Fruit Body */}
+
+          {/* Realistic ambient ground shadow */}
+          <ellipse cx="80" cy="146" rx="46" ry="9" fill="#1c1917" opacity="0.12" />
+          <ellipse cx="80" cy="145" rx="34" ry="6" fill="#1c1917" opacity="0.18" />
+
+          {/* Wooden Stem rooted in top dip */}
+          <path d="M80 44 C81 32 87 22 96 16 C98 15 101 16 99 18 C92 26 86 34 83 45 Z" fill="url(#appleStemGrad)" />
+
+          {/* Dewy Green Leaf with vein */}
+          <g filter="url(#appleSoftShadow)">
+            <path
+              d="M84 34 C100 18 126 22 130 38 C118 48 98 46 84 34 Z"
+              fill="url(#appleLeafGrad)"
+            />
+            <path d="M85 35 C100 29 116 32 128 38" stroke="#bbf7d0" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.75" />
+            <path d="M98 32 Q102 26 108 24" stroke="#bbf7d0" strokeWidth="0.8" fill="none" opacity="0.6" />
+            <path d="M106 34 Q112 30 118 30" stroke="#bbf7d0" strokeWidth="0.8" fill="none" opacity="0.6" />
+          </g>
+
+          {/* Apple Main Body with natural clefts */}
           <path
-            d="M80 50 C55 42 32 58 32 88 C32 122 55 138 74 138 C80 138 80 134 86 138 C105 138 128 122 128 88 C128 58 105 42 80 50 Z"
-            fill="url(#appleGrad)"
-            filter="url(#shadowApple)"
+            d="M80 44 C66 38 48 40 36 56 C22 74 24 104 38 126 C48 140 66 145 76 142 C79 141 81 141 84 142 C94 145 112 140 122 126 C136 104 138 74 124 56 C112 40 94 38 80 44 Z"
+            fill="url(#appleBodyGrad)"
+            filter="url(#appleSoftShadow)"
           />
-          {/* Gloss highlight */}
-          <ellipse cx="58" cy="74" rx="14" ry="24" transform="rotate(-25 58 74)" fill="#ffffff" opacity="0.25" />
-          <circle cx="50" cy="62" r="5" fill="#ffffff" opacity="0.4" />
+
+          {/* Stem cavity depression & golden warm glow */}
+          <ellipse cx="80" cy="46" rx="20" ry="8" fill="url(#appleCavityGlow)" />
+          <path d="M72 44 Q80 49 88 44" stroke="#450a0a" strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.6" />
+
+          {/* Bottom blossom calyx indents */}
+          <path d="M75 142 Q80 139 85 142" stroke="#2e0505" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.7" />
+
+          {/* Primary High-Gloss Specular Highlight */}
+          <path
+            d="M50 56 C42 66 40 82 44 98 C46 104 42 104 40 98 C36 82 38 64 48 54 C50 52 52 54 50 56 Z"
+            fill="#ffffff"
+            opacity="0.45"
+          />
+          {/* Soft secondary shine and light reflection */}
+          <ellipse cx="58" cy="68" rx="8" ry="18" transform="rotate(-28 58 68)" fill="#ffffff" opacity="0.3" />
+          <circle cx="52" cy="58" r="4.5" fill="#ffffff" opacity="0.5" />
+          {/* Subtle rim light on the lower right curve */}
+          <path d="M120 74 C128 88 128 108 118 124" stroke="#fca5a5" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.4" />
         </svg>
       );
 
@@ -48,32 +95,86 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả chuối 香蕉">
           <defs>
-            <linearGradient id="bananaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            {/* Ripe golden banana peel gradient */}
+            <linearGradient id="bananaPeelGrad" x1="15%" y1="10%" x2="85%" y2="90%">
               <stop offset="0%" stopColor="#fef08a" />
-              <stop offset="50%" stopColor="#facc15" />
+              <stop offset="30%" stopColor="#fde047" />
+              <stop offset="70%" stopColor="#eab308" />
+              <stop offset="100%" stopColor="#ca8a04" />
+            </linearGradient>
+            {/* Greenish stem crown */}
+            <linearGradient id="bananaCrownGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#65a30d" />
+              <stop offset="70%" stopColor="#84cc16" />
               <stop offset="100%" stopColor="#eab308" />
             </linearGradient>
-            <linearGradient id="bananaTip" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#65a30d" />
-              <stop offset="100%" stopColor="#4d7c0f" />
-            </linearGradient>
+            <filter id="bananaShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#854d0e" floodOpacity="0.2" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="140" rx="48" ry="8" fill="#000" opacity="0.08" />
-          {/* Banana body */}
-          <path
-            d="M32 40 C65 55 125 78 128 122 C115 134 82 130 52 108 C32 94 22 72 32 40 Z"
-            fill="url(#bananaGrad)"
-            stroke="#ca8a04"
-            strokeWidth="1.5"
-          />
-          {/* Ridge line */}
-          <path d="M36 44 C66 65 116 88 124 120" stroke="#ca8a04" strokeWidth="2.5" fill="none" opacity="0.6" />
-          {/* Stem top */}
-          <path d="M28 35 L34 42 L26 46 Z" fill="url(#bananaTip)" />
-          {/* Tip bottom */}
-          <circle cx="127" cy="122" r="4" fill="#713f12" />
-          {/* Soft shine */}
-          <path d="M48 62 C70 78 100 95 112 114" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.4" />
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="144" rx="52" ry="8" fill="#1c1917" opacity="0.1" />
+
+          {/* Background second banana for realistic appetizing depth */}
+          <g opacity="0.88">
+            <path
+              d="M38 48 C72 68 120 92 136 128 C124 136 94 130 68 110 C46 92 32 72 38 48 Z"
+              fill="#eab308"
+            />
+            <path d="M40 50 C74 72 118 96 130 126" stroke="#ca8a04" strokeWidth="2" fill="none" opacity="0.5" />
+          </g>
+
+          {/* Main ripe banana with authentic curve and ridges */}
+          <g filter="url(#bananaShadow)">
+            <path
+              d="M26 38 C56 54 116 80 134 124 C122 134 88 132 58 108 C34 88 20 62 26 38 Z"
+              fill="url(#bananaPeelGrad)"
+            />
+            {/* Faceted longitudinal ridge lines with natural highlight and shadow */}
+            <path
+              d="M30 42 C60 64 112 88 128 122"
+              stroke="#ca8a04"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              fill="none"
+              opacity="0.75"
+            />
+            <path
+              d="M34 40 C62 58 106 78 124 112"
+              stroke="#ffffff"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              fill="none"
+              opacity="0.45"
+            />
+            <path
+              d="M48 68 C74 86 102 104 116 122"
+              stroke="#a16207"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              fill="none"
+              opacity="0.4"
+            />
+          </g>
+
+          {/* Stem crown at top */}
+          <path d="M22 34 C24 28 29 25 34 32 L26 42 Z" fill="url(#bananaCrownGrad)" stroke="#4d7c0f" strokeWidth="1" />
+          <path d="M22 34 L28 31" stroke="#365314" strokeWidth="2" strokeLinecap="round" />
+
+          {/* Characteristic dark flower scar at tip */}
+          <path d="M132 122 C135 124 136 127 133 129 C130 131 127 128 129 125 Z" fill="#451a03" />
+
+          {/* Sweet ripe sugar freckles (tàn nhang chuối chín ngọt) */}
+          <g fill="#713f12" opacity="0.55">
+            <circle cx="58" cy="74" r="1.3" />
+            <circle cx="64" cy="72" r="1.1" />
+            <circle cx="82" cy="88" r="1.4" />
+            <circle cx="92" cy="94" r="1.2" />
+            <circle cx="104" cy="106" r="1.5" />
+            <circle cx="76" cy="82" r="1.1" />
+            <circle cx="112" cy="116" r="1.3" />
+          </g>
         </svg>
       );
 
@@ -81,28 +182,74 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Dưa hấu 西瓜">
           <defs>
-            <radialGradient id="melonRind" cx="50%" cy="50%" r="50%">
-              <stop offset="70%" stopColor="#15803d" />
-              <stop offset="100%" stopColor="#14532d" />
+            {/* Outer dark jade rind with stripes */}
+            <radialGradient id="melonOuterRind" cx="50%" cy="50%" r="50%">
+              <stop offset="65%" stopColor="#15803d" />
+              <stop offset="90%" stopColor="#166534" />
+              <stop offset="100%" stopColor="#052e16" />
             </radialGradient>
-            <linearGradient id="melonFlesh" x1="0%" y1="0%" x2="0%" y2="100%">
+            {/* Juicy mouthwatering red flesh */}
+            <linearGradient id="melonPulpGrad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#fb7185" />
+              <stop offset="35%" stopColor="#f43f5e" />
               <stop offset="70%" stopColor="#e11d48" />
-              <stop offset="100%" stopColor="#be123c" />
+              <stop offset="100%" stopColor="#9f1239" />
             </linearGradient>
+            <filter id="melonShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#064e3b" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="142" rx="55" ry="9" fill="#000" opacity="0.08" />
-          {/* Watermelon slice wedge */}
-          <path d="M22 62 C50 145 110 145 138 62 Z" fill="#15803d" />
-          <path d="M26 64 C52 140 108 140 134 64 Z" fill="#ecfdf5" />
-          <path d="M30 66 C55 134 105 134 130 66 Z" fill="url(#melonFlesh)" />
-          {/* Watermelon seeds */}
-          {[[52, 85], [78, 92], [105, 86], [64, 108], [94, 110], [80, 75]].map(([cx, cy], i) => (
-            <ellipse key={i} cx={cx} cy={cy} rx="3" ry="5" fill="#1c1917" transform={`rotate(${i % 2 === 0 ? -15 : 15} ${cx} ${cy})`} />
+
+          {/* Ground shadow */}
+          <ellipse cx="80" cy="146" rx="55" ry="9" fill="#1c1917" opacity="0.12" />
+
+          {/* Watermelon Slice Wedge */}
+          <g filter="url(#melonShadow)">
+            {/* Green outer rind */}
+            <path d="M18 58 C46 148 114 148 142 58 Z" fill="url(#melonOuterRind)" />
+            {/* Dark green rind jagged stripes */}
+            <path d="M38 108 Q48 132 58 138" stroke="#052e16" strokeWidth="4" strokeLinecap="round" fill="none" />
+            <path d="M72 136 Q80 144 88 136" stroke="#052e16" strokeWidth="4" strokeLinecap="round" fill="none" />
+            <path d="M122 108 Q112 132 102 138" stroke="#052e16" strokeWidth="4" strokeLinecap="round" fill="none" />
+
+            {/* Crisp pale jade/white rind layer */}
+            <path d="M22 60 C49 142 111 142 138 60 Z" fill="#ecfdf5" />
+            <path d="M25 61 C51 138 109 138 135 61 Z" fill="#d1fae5" />
+
+            {/* Vibrant crystalline crimson flesh */}
+            <path d="M27 62 C53 134 107 134 133 62 Z" fill="url(#melonPulpGrad)" />
+
+            {/* Translucent watery juice sheen */}
+            <path d="M34 66 C56 116 104 116 126 66 Z" fill="#ffffff" opacity="0.12" />
+          </g>
+
+          {/* Shiny black seeds in natural teardrop recesses */}
+          {[
+            { cx: 52, cy: 84, rot: -20 },
+            { cx: 78, cy: 92, rot: 5 },
+            { cx: 106, cy: 85, rot: 22 },
+            { cx: 64, cy: 110, rot: -10 },
+            { cx: 94, cy: 112, rot: 15 },
+            { cx: 80, cy: 74, rot: -5 },
+            { cx: 44, cy: 72, rot: -35 },
+            { cx: 116, cy: 73, rot: 35 }
+          ].map((seed, i) => (
+            <g key={i} transform={`rotate(${seed.rot} ${seed.cx} ${seed.cy})`}>
+              {/* Seed pocket shadow */}
+              <ellipse cx={seed.cx} cy={seed.cy + 1} rx="3.5" ry="5.5" fill="#4c0519" opacity="0.6" />
+              {/* Shiny seed body */}
+              <path
+                d={`M${seed.cx} ${seed.cy - 5} C${seed.cx + 3} ${seed.cy - 2} ${seed.cx + 3} ${seed.cy + 4} ${seed.cx} ${seed.cy + 5} C${seed.cx - 3} ${seed.cy + 4} ${seed.cx - 3} ${seed.cy - 2} ${seed.cx} ${seed.cy - 5} Z`}
+                fill="#18181b"
+              />
+              {/* Specular dot */}
+              <circle cx={seed.cx - 1} cy={seed.cy - 1} r="0.9" fill="#ffffff" opacity="0.8" />
+            </g>
           ))}
-          {/* Rind stripes */}
-          <path d="M42 120 Q50 135 60 140" stroke="#166534" strokeWidth="3" fill="none" />
-          <path d="M118 120 Q110 135 100 140" stroke="#166534" strokeWidth="3" fill="none" />
+
+          {/* Glistening fresh juice drops on slice top */}
+          <ellipse cx="65" cy="65" rx="3" ry="1.5" fill="#ffffff" opacity="0.6" />
+          <ellipse cx="95" cy="66" rx="4" ry="1.8" fill="#ffffff" opacity="0.5" />
         </svg>
       );
 
@@ -110,21 +257,52 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả xoài 芒果">
           <defs>
-            <radialGradient id="mangoGrad" cx="40%" cy="35%" r="65%">
+            {/* Smooth sunset gradient: golden honey body with rosy coral blush at the shoulder */}
+            <radialGradient id="mangoBodyGrad" cx="35%" cy="30%" r="70%">
               <stop offset="0%" stopColor="#fef08a" />
-              <stop offset="40%" stopColor="#f59e0b" />
+              <stop offset="30%" stopColor="#facc15" />
+              <stop offset="60%" stopColor="#f97316" />
               <stop offset="85%" stopColor="#ea580c" />
-              <stop offset="100%" stopColor="#c2410c" />
+              <stop offset="100%" stopColor="#9a3412" />
             </radialGradient>
+            <radialGradient id="mangoBlush" cx="70%" cy="32%" r="45%">
+              <stop offset="0%" stopColor="#f43f5e" stopOpacity="0.8" />
+              <stop offset="60%" stopColor="#ea580c" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#ea580c" stopOpacity="0" />
+            </radialGradient>
+            <filter id="mangoShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#78350f" floodOpacity="0.22" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="140" rx="45" ry="9" fill="#000" opacity="0.08" />
-          <path d="M78 30 Q80 20 86 16" stroke="#713f12" strokeWidth="5" strokeLinecap="round" fill="none" />
-          <path d="M84 26 Q105 20 114 32 Q96 38 84 26 Z" fill="#22c55e" />
+
+          {/* Shadow */}
+          <ellipse cx="80" cy="145" rx="48" ry="9" fill="#1c1917" opacity="0.12" />
+
+          {/* Little green twig & leaf at stem */}
+          <path d="M78 28 C79 18 84 14 90 12" stroke="#543310" strokeWidth="4.5" strokeLinecap="round" fill="none" />
+          <path d="M84 24 C104 14 120 22 122 34 C106 38 92 32 84 24 Z" fill="#15803d" />
+          <path d="M85 24 Q104 22 118 32" stroke="#86efac" strokeWidth="1" fill="none" opacity="0.7" />
+
+          {/* Mango Body with smooth sensuous S-curve */}
           <path
-            d="M75 32 C45 32 32 60 35 90 C38 125 65 138 85 138 C115 138 132 110 128 75 C124 45 102 32 75 32 Z"
-            fill="url(#mangoGrad)"
+            d="M76 28 C50 28 32 54 34 86 C36 122 62 142 86 142 C116 142 134 116 132 80 C130 48 104 28 76 28 Z"
+            fill="url(#mangoBodyGrad)"
+            filter="url(#mangoShadow)"
           />
-          <ellipse cx="62" cy="65" rx="12" ry="20" transform="rotate(-30 62 65)" fill="#ffffff" opacity="0.3" />
+          {/* Sunset Rose Blush Overlay */}
+          <path
+            d="M76 28 C50 28 32 54 34 86 C36 122 62 142 86 142 C116 142 134 116 132 80 C130 48 104 28 76 28 Z"
+            fill="url(#mangoBlush)"
+          />
+
+          {/* Stem cavity dent */}
+          <ellipse cx="76" cy="30" rx="8" ry="4" fill="#713f12" opacity="0.6" />
+
+          {/* Silky satin sheen */}
+          <ellipse cx="58" cy="65" rx="14" ry="26" transform="rotate(-30 58 65)" fill="#ffffff" opacity="0.32" />
+          <circle cx="50" cy="52" r="5" fill="#ffffff" opacity="0.45" />
+          {/* Gentle edge reflection */}
+          <path d="M122 70 C128 86 124 108 114 122" stroke="#fef08a" strokeWidth="2.2" strokeLinecap="round" fill="none" opacity="0.4" />
         </svg>
       );
 
@@ -132,30 +310,69 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả nho 葡萄">
           <defs>
-            <radialGradient id="grapeGrad" cx="35%" cy="35%" r="65%">
-              <stop offset="0%" stopColor="#c084fc" />
-              <stop offset="60%" stopColor="#7e22ce" />
-              <stop offset="100%" stopColor="#581c87" />
+            {/* Translucent sapphire-purple grape sphere with waxy bloom */}
+            <radialGradient id="grapeOrbGrad" cx="35%" cy="32%" r="65%">
+              <stop offset="0%" stopColor="#d8b4fe" />
+              <stop offset="35%" stopColor="#9333ea" />
+              <stop offset="70%" stopColor="#6b21a8" />
+              <stop offset="95%" stopColor="#3b0764" />
+              <stop offset="100%" stopColor="#1e053a" />
             </radialGradient>
+            {/* Waxy powdery bloom (lớp phấn mờ phủ trên nho tươi) */}
+            <radialGradient id="grapeBloom" cx="50%" cy="50%" r="50%">
+              <stop offset="65%" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="90%" stopColor="#e9d5ff" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#c084fc" stopOpacity="0.35" />
+            </radialGradient>
+            <filter id="grapeShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#3b0764" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="144" rx="36" ry="8" fill="#000" opacity="0.08" />
-          {/* Stem & Vine */}
-          <path d="M80 40 Q80 20 75 14" stroke="#713f12" strokeWidth="4.5" strokeLinecap="round" fill="none" />
-          <path d="M78 28 Q60 16 54 26 Q66 35 78 28 Z" fill="#16a34a" />
-          <path d="M82 28 Q100 16 106 26 Q94 35 82 28 Z" fill="#22c55e" />
-          {/* Grape bunch circles */}
-          {[
-            [60, 52], [80, 48], [100, 52],
-            [50, 68], [70, 66], [90, 66], [110, 68],
-            [60, 84], [80, 82], [100, 84],
-            [70, 100], [90, 100],
-            [80, 116], [80, 130]
-          ].map(([cx, cy], i) => (
-            <g key={i}>
-              <circle cx={cx} cy={cy} r="13" fill="url(#grapeGrad)" stroke="#3b0764" strokeWidth="0.8" />
-              <circle cx={cx - 4} cy={cy - 4} r="3.5" fill="#ffffff" opacity="0.35" />
-            </g>
-          ))}
+
+          {/* Ground shadow */}
+          <ellipse cx="80" cy="146" rx="40" ry="8" fill="#1c1917" opacity="0.12" />
+
+          {/* Gnarled wooden vine and green tendril */}
+          <path d="M80 40 C80 24 74 16 68 12" stroke="#543310" strokeWidth="5" strokeLinecap="round" fill="none" />
+          <path d="M80 34 C88 20 102 18 106 28 C94 36 84 38 80 34 Z" fill="#15803d" />
+          <path d="M68 22 C60 20 54 26 56 34 C58 40 66 38 64 30" stroke="#16a34a" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+
+          {/* Cascading 3D Grape Cluster */}
+          <g filter="url(#grapeShadow)">
+            {[
+              // Background layer (darker shadows)
+              { cx: 62, cy: 56, r: 14 },
+              { cx: 98, cy: 56, r: 14 },
+              { cx: 52, cy: 76, r: 14.5 },
+              { cx: 108, cy: 76, r: 14.5 },
+              { cx: 60, cy: 104, r: 13.5 },
+              { cx: 100, cy: 104, r: 13.5 },
+              // Mid-ground layer
+              { cx: 80, cy: 52, r: 15 },
+              { cx: 68, cy: 74, r: 15.5 },
+              { cx: 92, cy: 74, r: 15.5 },
+              { cx: 72, cy: 96, r: 15 },
+              { cx: 88, cy: 96, r: 15 },
+              { cx: 80, cy: 116, r: 14 },
+              { cx: 80, cy: 132, r: 11.5 }
+            ].map((grape, i) => (
+              <g key={i}>
+                <circle cx={grape.cx} cy={grape.cy} r={grape.r} fill="url(#grapeOrbGrad)" stroke="#2e0854" strokeWidth="0.6" />
+                <circle cx={grape.cx} cy={grape.cy} r={grape.r} fill="url(#grapeBloom)" />
+                {/* Specular pearl light reflection */}
+                <ellipse
+                  cx={grape.cx - grape.r * 0.32}
+                  cy={grape.cy - grape.r * 0.32}
+                  rx={grape.r * 0.28}
+                  ry={grape.r * 0.2}
+                  transform={`rotate(-35 ${grape.cx - grape.r * 0.32} ${grape.cy - grape.r * 0.32})`}
+                  fill="#ffffff"
+                  opacity="0.65"
+                />
+                <circle cx={grape.cx - grape.r * 0.35} cy={grape.cy - grape.r * 0.35} r={grape.r * 0.12} fill="#ffffff" opacity="0.9" />
+              </g>
+            ))}
+          </g>
         </svg>
       );
 
@@ -163,33 +380,62 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Dâu tây 草莓">
           <defs>
-            <radialGradient id="berryGrad" cx="40%" cy="35%" r="65%">
-              <stop offset="0%" stopColor="#f87171" />
-              <stop offset="60%" stopColor="#dc2626" />
-              <stop offset="100%" stopColor="#991b1b" />
+            {/* Glowing crimson strawberry gradient */}
+            <radialGradient id="berryBodyGrad" cx="40%" cy="32%" r="70%">
+              <stop offset="0%" stopColor="#ff4d4d" />
+              <stop offset="30%" stopColor="#ef4444" />
+              <stop offset="65%" stopColor="#dc2626" />
+              <stop offset="90%" stopColor="#991b1b" />
+              <stop offset="100%" stopColor="#580808" />
             </radialGradient>
+            <filter id="berryShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#991b1b" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="142" rx="38" ry="8" fill="#000" opacity="0.08" />
-          {/* Fruit heart body */}
-          <path
-            d="M80 46 C50 44 34 65 36 94 C38 122 72 142 80 144 C88 142 122 122 124 94 C126 65 110 44 80 46 Z"
-            fill="url(#berryGrad)"
-          />
-          {/* Seed specks */}
+
+          {/* Ground shadow */}
+          <ellipse cx="80" cy="146" rx="42" ry="8" fill="#1c1917" opacity="0.12" />
+
+          {/* Strawberry Heart Body */}
+          <g filter="url(#berryShadow)">
+            <path
+              d="M80 44 C50 42 32 64 34 94 C36 124 72 144 80 146 C88 144 124 124 126 94 C128 64 110 42 80 44 Z"
+              fill="url(#berryBodyGrad)"
+            />
+          </g>
+
+          {/* Hundreds of golden achenes (seeds) in realistic dimples with shadow */}
           {[
-            [60, 68], [80, 65], [100, 68],
-            [50, 86], [70, 86], [90, 86], [110, 86],
-            [60, 105], [80, 106], [100, 105],
-            [72, 124], [88, 124]
+            [54, 62], [70, 58], [90, 58], [106, 62],
+            [44, 78], [62, 74], [80, 74], [98, 74], [116, 78],
+            [48, 96], [66, 94], [80, 94], [94, 94], [112, 96],
+            [56, 114], [72, 114], [88, 114], [104, 114],
+            [68, 130], [80, 132], [92, 130]
           ].map(([cx, cy], i) => (
-            <ellipse key={i} cx={cx} cy={cy} rx="1.8" ry="2.6" fill="#fef08a" transform={`rotate(${i % 2 === 0 ? -10 : 10} ${cx} ${cy})`} />
+            <g key={i}>
+              {/* Dimple shadow depression */}
+              <ellipse cx={cx} cy={cy + 1} rx="2.5" ry="3.5" fill="#450a0a" opacity="0.75" />
+              {/* Golden-yellow seed */}
+              <ellipse cx={cx} cy={cy} rx="1.6" ry="2.6" fill="#fef08a" stroke="#ca8a04" strokeWidth="0.5" />
+              {/* Specular dot on seed */}
+              <circle cx={cx - 0.5} cy={cy - 0.8} r="0.6" fill="#ffffff" />
+            </g>
           ))}
-          {/* Green Calyx Leaf Top */}
-          <path d="M80 32 L80 48" stroke="#15803d" strokeWidth="4" strokeLinecap="round" />
-          <path d="M80 46 Q60 36 48 46 Q64 54 80 48" fill="#22c55e" />
-          <path d="M80 46 Q100 36 112 46 Q96 54 80 48" fill="#16a34a" />
-          <path d="M80 46 Q70 28 80 26 Q90 28 80 48" fill="#4ade80" />
-          <ellipse cx="58" cy="72" rx="10" ry="18" transform="rotate(-25 58 72)" fill="#ffffff" opacity="0.25" />
+
+          {/* Wet glistening highlights */}
+          <ellipse cx="52" cy="72" rx="10" ry="18" transform="rotate(-25 52 72)" fill="#ffffff" opacity="0.32" />
+          <circle cx="46" cy="62" r="3.5" fill="#ffffff" opacity="0.55" />
+
+          {/* Realistic star-shaped leafy green sepal crown (calyx) */}
+          <g>
+            <path d="M80 32 L80 46" stroke="#15803d" strokeWidth="5" strokeLinecap="round" />
+            {/* Curved leaves draping over the berry */}
+            <path d="M80 46 C62 34 44 42 36 54 C50 56 66 52 80 46 Z" fill="#16a34a" />
+            <path d="M80 46 C98 34 116 42 124 54 C110 56 94 52 80 46 Z" fill="#15803d" />
+            <path d="M80 46 C68 28 54 26 48 28 C56 38 68 44 80 46 Z" fill="#22c55e" />
+            <path d="M80 46 C92 28 106 26 112 28 C104 38 92 44 80 46 Z" fill="#16a34a" />
+            <path d="M80 46 C76 30 84 24 80 20 C76 26 74 34 80 46 Z" fill="#4ade80" />
+          </g>
         </svg>
       );
 
@@ -197,31 +443,75 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Sầu riêng 榴莲">
           <defs>
-            <radialGradient id="durianShell" cx="50%" cy="50%" r="50%">
-              <stop offset="65%" stopColor="#84cc16" />
-              <stop offset="90%" stopColor="#65a30d" />
-              <stop offset="100%" stopColor="#4d7c0f" />
+            {/* Golden olive durian husk */}
+            <radialGradient id="durianShellGrad" cx="45%" cy="40%" r="60%">
+              <stop offset="0%" stopColor="#a3e635" />
+              <stop offset="50%" stopColor="#65a30d" />
+              <stop offset="85%" stopColor="#4d7c0f" />
+              <stop offset="100%" stopColor="#283e06" />
             </radialGradient>
-            <radialGradient id="durianPod" cx="40%" cy="40%" r="60%">
+            {/* Rich creamy golden custard pulp pod */}
+            <radialGradient id="durianCustardGrad" cx="35%" cy="30%" r="68%">
               <stop offset="0%" stopColor="#fef08a" />
-              <stop offset="70%" stopColor="#facc15" />
-              <stop offset="100%" stopColor="#eab308" />
+              <stop offset="40%" stopColor="#facc15" />
+              <stop offset="85%" stopColor="#eab308" />
+              <stop offset="100%" stopColor="#a16207" />
             </radialGradient>
+            <filter id="durianShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#365314" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="144" rx="46" ry="9" fill="#000" opacity="0.08" />
-          {/* Durian Spikes / Outline */}
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="146" rx="52" ry="9" fill="#1c1917" opacity="0.14" />
+
+          {/* Thick sturdy woody pedicel / stem */}
+          <path d="M80 28 C79 18 83 12 86 8" stroke="#543310" strokeWidth="8" strokeLinecap="round" />
+          <path d="M76 26 C82 28 88 28 92 26" stroke="#2e1906" strokeWidth="3" strokeLinecap="round" />
+
+          {/* 3D Durian husk with faceted pyramidal spikes */}
+          <g filter="url(#durianShadow)">
+            <ellipse cx="80" cy="88" rx="52" ry="56" fill="url(#durianShellGrad)" />
+
+            {/* Realistic sharp pyramidal 3D thorns around boundary */}
+            {[
+              'M80 26 L86 36 L74 36 Z', 'M96 30 L102 42 L90 40 Z', 'M112 40 L118 52 L106 50 Z',
+              'M126 56 L134 68 L122 66 Z', 'M132 76 L142 86 L130 86 Z', 'M132 98 L140 108 L128 106 Z',
+              'M122 118 L128 128 L116 124 Z', 'M104 134 L108 144 L96 138 Z', 'M80 144 L86 152 L74 152 Z',
+              'M56 134 L52 144 L64 138 Z', 'M38 118 L32 128 L44 124 Z', 'M28 98 L20 108 L32 106 Z',
+              'M28 76 L18 86 L30 86 Z', 'M34 56 L26 68 L38 66 Z', 'M48 40 L42 52 L54 50 Z', 'M64 30 L58 42 L70 40 Z'
+            ].map((d, i) => (
+              <path key={i} d={d} fill="#84cc16" stroke="#365314" strokeWidth="1" />
+            ))}
+
+            {/* Interior faceted spike texture */}
+            <g fill="#4d7c0f" opacity="0.4">
+              {[
+                [50, 60], [70, 52], [90, 52], [110, 60],
+                [42, 80], [118, 80], [44, 102], [116, 102],
+                [56, 122], [76, 134], [96, 126]
+              ].map(([cx, cy], i) => (
+                <polygon key={i} points={`${cx},${cy - 5} ${cx + 4},${cy + 4} ${cx - 4},${cy + 4}`} />
+              ))}
+            </g>
+          </g>
+
+          {/* Ripe natural split revealing luscious golden custard pulp */}
           <path
-            d="M80 26 L88 36 L98 28 L103 40 L115 36 L118 48 L129 48 L128 60 L138 64 L133 76 L141 82 L133 92 L140 100 L129 108 L133 118 L120 123 L121 133 L108 134 L103 143 L91 140 L80 146 L69 140 L57 143 L52 134 L39 133 L40 123 L27 118 L31 108 L20 100 L27 92 L19 82 L27 76 L22 64 L32 60 L31 48 L42 48 L45 36 L57 40 L62 28 L72 36 Z"
-            fill="url(#durianShell)"
-            stroke="#3f6212"
-            strokeWidth="1.5"
+            d="M60 52 C50 78 52 112 66 128 C74 122 78 110 74 88 C70 68 64 54 60 52 Z"
+            fill="#2e1005"
+            opacity="0.8"
           />
-          {/* Stem */}
-          <path d="M80 28 L80 14" stroke="#713f12" strokeWidth="6" strokeLinecap="round" />
-          {/* Opened golden pod visible in middle */}
-          <ellipse cx="68" cy="88" rx="20" ry="32" transform="rotate(-15 68 88)" fill="url(#durianPod)" stroke="#ca8a04" strokeWidth="1" />
-          <ellipse cx="94" cy="88" rx="18" ry="30" transform="rotate(15 94 88)" fill="url(#durianPod)" stroke="#ca8a04" strokeWidth="1" />
-          <ellipse cx="64" cy="80" rx="8" ry="16" transform="rotate(-15 64 80)" fill="#ffffff" opacity="0.3" />
+          {/* Plump, thick golden custard pod (múi sầu riêng vàng ươm thơm béo) */}
+          <path
+            d="M62 56 C54 74 54 104 68 124 C82 120 86 102 84 82 C82 66 74 56 62 56 Z"
+            fill="url(#durianCustardGrad)"
+            stroke="#a16207"
+            strokeWidth="1.2"
+          />
+          {/* Creamy gloss highlight on custard pulp */}
+          <ellipse cx="68" cy="78" rx="6" ry="18" transform="rotate(-15 68 78)" fill="#ffffff" opacity="0.45" />
+          <circle cx="66" cy="68" r="3" fill="#ffffff" opacity="0.6" />
         </svg>
       );
 
@@ -229,27 +519,47 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả cam 橙子">
           <defs>
-            <radialGradient id="orangeGrad" cx="35%" cy="35%" r="65%">
-              <stop offset="0%" stopColor="#fdba74" />
-              <stop offset="60%" stopColor="#f97316" />
-              <stop offset="100%" stopColor="#c2410c" />
+            {/* Saturated sphere gradient for citrus */}
+            <radialGradient id="orangeBodyGrad" cx="35%" cy="32%" r="68%">
+              <stop offset="0%" stopColor="#fed7aa" />
+              <stop offset="30%" stopColor="#fb923c" />
+              <stop offset="65%" stopColor="#f97316" />
+              <stop offset="90%" stopColor="#c2410c" />
+              <stop offset="100%" stopColor="#7c2d12" />
             </radialGradient>
+            <filter id="orangeShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#7c2d12" floodOpacity="0.22" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="142" rx="46" ry="9" fill="#000" opacity="0.08" />
-          {/* Stem & Leaves */}
-          <path d="M80 38 Q82 20 86 16" stroke="#713f12" strokeWidth="4" strokeLinecap="round" fill="none" />
-          <path d="M82 32 Q105 18 116 28 Q100 38 82 32 Z" fill="#16a34a" />
-          <path d="M78 34 Q58 22 50 32 Q66 40 78 34 Z" fill="#22c55e" />
-          {/* Round fruit body */}
-          <circle cx="80" cy="88" r="52" fill="url(#orangeGrad)" />
-          {/* Texture dots */}
-          <g fill="#ea580c" opacity="0.4">
-            <circle cx="60" cy="65" r="1.5" /><circle cx="75" cy="58" r="1.5" /><circle cx="95" cy="62" r="1.5" />
-            <circle cx="50" cy="85" r="1.5" /><circle cx="68" cy="82" r="1.5" /><circle cx="102" cy="88" r="1.5" />
-            <circle cx="60" cy="108" r="1.5" /><circle cx="80" cy="115" r="1.5" /><circle cx="98" cy="110" r="1.5" />
+
+          {/* Shadow */}
+          <ellipse cx="80" cy="146" rx="48" ry="9" fill="#1c1917" opacity="0.12" />
+
+          {/* Woody stem & crisp green citrus leaves */}
+          <path d="M80 34 C82 22 86 16 92 12" stroke="#543310" strokeWidth="4.5" strokeLinecap="round" fill="none" />
+          {/* Main leaf */}
+          <path d="M84 28 C108 14 126 24 128 38 C110 46 94 40 84 28 Z" fill="#15803d" />
+          <path d="M85 28 Q108 26 124 38" stroke="#86efac" strokeWidth="1.2" fill="none" opacity="0.7" />
+          {/* Smaller secondary leaf */}
+          <path d="M78 30 C60 18 46 26 44 38 C58 44 72 40 78 30 Z" fill="#16a34a" />
+
+          {/* Round spherical orange body */}
+          <circle cx="80" cy="90" r="52" fill="url(#orangeBodyGrad)" filter="url(#orangeShadow)" />
+
+          {/* Calyx star button at stem base */}
+          <polygon points="80,36 82,40 86,39 83,43 85,46 80,44 75,46 77,43 74,39 78,40" fill="#365314" />
+
+          {/* Microscopic citrus peel pore texture (lỗ chân lông vỏ cam) */}
+          <g fill="#9a3412" opacity="0.38">
+            <circle cx="56" cy="68" r="1.2" /><circle cx="68" cy="60" r="1.3" /><circle cx="82" cy="58" r="1.2" /><circle cx="98" cy="64" r="1.3" />
+            <circle cx="48" cy="84" r="1.3" /><circle cx="64" cy="80" r="1.4" /><circle cx="94" cy="82" r="1.3" /><circle cx="112" cy="86" r="1.4" />
+            <circle cx="56" cy="106" r="1.4" /><circle cx="74" cy="102" r="1.3" /><circle cx="92" cy="106" r="1.4" /><circle cx="106" cy="104" r="1.3" />
+            <circle cx="68" cy="122" r="1.2" /><circle cx="84" cy="126" r="1.3" /><circle cx="96" cy="120" r="1.2" />
           </g>
-          {/* Gloss */}
-          <ellipse cx="58" cy="68" rx="14" ry="24" transform="rotate(-30 58 68)" fill="#ffffff" opacity="0.28" />
+
+          {/* Glossy specular reflection */}
+          <ellipse cx="58" cy="68" rx="14" ry="24" transform="rotate(-30 58 68)" fill="#ffffff" opacity="0.35" />
+          <circle cx="50" cy="56" r="5" fill="#ffffff" opacity="0.5" />
         </svg>
       );
 
@@ -257,41 +567,59 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Thanh long 火龙果">
           <defs>
-            <radialGradient id="dragonSkin" cx="40%" cy="40%" r="60%">
-              <stop offset="0%" stopColor="#f43f5e" />
+            {/* Dazzling magenta-pink dragon skin */}
+            <radialGradient id="dragonSkinGrad" cx="40%" cy="35%" r="68%">
+              <stop offset="0%" stopColor="#fb7185" />
+              <stop offset="35%" stopColor="#f43f5e" />
               <stop offset="70%" stopColor="#e11d48" />
-              <stop offset="100%" stopColor="#9f1239" />
-            </radialGradient>
-            <linearGradient id="scaleGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#86efac" />
-              <stop offset="100%" stopColor="#16a34a" />
-            </linearGradient>
-            <radialGradient id="pulpRed" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#f43f5e" />
-              <stop offset="85%" stopColor="#be123c" />
+              <stop offset="90%" stopColor="#be123c" />
               <stop offset="100%" stopColor="#881337" />
             </radialGradient>
+            {/* Green scale leaf tips */}
+            <linearGradient id="dragonBractGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#a3e635" />
+              <stop offset="50%" stopColor="#4ade80" />
+              <stop offset="100%" stopColor="#e11d48" />
+            </linearGradient>
+            <filter id="dragonShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#881337" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="144" rx="46" ry="9" fill="#000" opacity="0.08" />
-          {/* Main oval body */}
-          <ellipse cx="80" cy="88" rx="46" ry="54" fill="url(#dragonSkin)" />
-          {/* Wavy dragon scales */}
-          {[
-            'M40 60 Q20 48 35 32 Q48 50 40 60',
-            'M120 60 Q140 48 125 32 Q112 50 120 60',
-            'M34 90 Q12 85 24 68 Q40 80 34 90',
-            'M126 90 Q148 85 136 68 Q120 80 126 90',
-            'M42 120 Q24 122 34 105 Q48 112 42 120',
-            'M118 120 Q136 122 126 105 Q112 112 118 120',
-            'M70 34 Q80 12 90 34 Q80 26 70 34'
-          ].map((d, i) => (
-            <path key={i} d={d} fill="url(#scaleGreen)" stroke="#15803d" strokeWidth="1" />
-          ))}
-          {/* Sliced half showing vibrant red flesh & seeds */}
-          <ellipse cx="80" cy="94" rx="28" ry="34" fill="url(#pulpRed)" stroke="#881337" strokeWidth="1.5" />
-          {[[70, 78], [88, 76], [68, 92], [80, 94], [92, 92], [72, 108], [86, 110]].map(([cx, cy], i) => (
-            <circle key={i} cx={cx} cy={cy} r="1.4" fill="#09090b" />
-          ))}
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="146" rx="46" ry="9" fill="#1c1917" opacity="0.12" />
+
+          {/* Dragonfruit body */}
+          <g filter="url(#dragonShadow)">
+            <ellipse cx="80" cy="90" rx="46" ry="54" fill="url(#dragonSkinGrad)" />
+
+            {/* Layered curled succulent flame scales with lime green tips */}
+            {[
+              // Top crown bracts
+              'M72 36 C70 14 80 10 84 12 C82 22 84 32 80 38 Z',
+              'M64 42 C48 24 60 18 66 22 C68 30 72 38 72 44 Z',
+              'M88 42 C104 24 92 18 86 22 C84 30 80 38 80 44 Z',
+              // Upper flanks
+              'M40 62 C18 46 24 34 36 38 C44 46 48 54 44 64 Z',
+              'M120 62 C142 46 136 34 124 38 C116 46 112 54 116 64 Z',
+              // Mid flanks
+              'M34 88 C10 82 14 66 26 70 C36 78 40 84 38 90 Z',
+              'M126 88 C150 82 146 66 134 70 C124 78 120 84 122 90 Z',
+              // Lower flanks
+              'M42 118 C20 120 22 104 34 106 C42 112 46 116 44 120 Z',
+              'M118 118 C140 120 138 104 126 106 C118 112 114 116 116 120 Z'
+            ].map((d, i) => (
+              <path key={i} d={d} fill="url(#dragonBractGrad)" stroke="#15803d" strokeWidth="0.8" />
+            ))}
+          </g>
+
+          {/* Center bract scales on body surface */}
+          <path d="M68 76 C64 66 74 62 80 66 C78 72 74 76 68 76 Z" fill="url(#dragonBractGrad)" stroke="#15803d" strokeWidth="0.8" />
+          <path d="M92 76 C96 66 86 62 80 66 C82 72 86 76 92 76 Z" fill="url(#dragonBractGrad)" stroke="#15803d" strokeWidth="0.8" />
+          <path d="M72 102 C68 92 78 88 84 92 C82 98 78 102 72 102 Z" fill="url(#dragonBractGrad)" stroke="#15803d" strokeWidth="0.8" />
+
+          {/* Glossy light reflection */}
+          <ellipse cx="62" cy="74" rx="10" ry="22" transform="rotate(-25 62 74)" fill="#ffffff" opacity="0.3" />
         </svg>
       );
 
@@ -299,45 +627,67 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Măng cụt 山竹">
           <defs>
-            <radialGradient id="mangosteenRind" cx="40%" cy="35%" r="65%">
-              <stop offset="0%" stopColor="#701a75" />
-              <stop offset="70%" stopColor="#4a044e" />
-              <stop offset="100%" stopColor="#2e0233" />
+            {/* Deep royal aubergine purple rind */}
+            <radialGradient id="mangosteenRindGrad" cx="38%" cy="32%" r="68%">
+              <stop offset="0%" stopColor="#86198f" />
+              <stop offset="45%" stopColor="#581c87" />
+              <stop offset="75%" stopColor="#3b0764" />
+              <stop offset="100%" stopColor="#1e053a" />
             </radialGradient>
-            <radialGradient id="segmentWhite" cx="40%" cy="40%" r="60%">
+            {/* Pearly white garlic-like segment */}
+            <radialGradient id="cloveWhiteGrad" cx="40%" cy="35%" r="65%">
               <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="85%" stopColor="#f1f5f9" />
+              <stop offset="75%" stopColor="#f8fafc" />
               <stop offset="100%" stopColor="#cbd5e1" />
             </radialGradient>
+            <filter id="mangosteenShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#3b0764" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="142" rx="44" ry="9" fill="#000" opacity="0.08" />
-          {/* Stem & Calyx */}
-          <path d="M80 40 L80 22" stroke="#4d7c0f" strokeWidth="6" strokeLinecap="round" />
-          <ellipse cx="64" cy="42" rx="14" ry="9" fill="#65a30d" transform="rotate(-15 64 42)" />
-          <ellipse cx="96" cy="42" rx="14" ry="9" fill="#4d7c0f" transform="rotate(15 96 42)" />
-          {/* Purple round body */}
-          <circle cx="80" cy="90" r="48" fill="url(#mangosteenRind)" />
-          {/* Open window revealing pearly white segments */}
-          <circle cx="80" cy="90" r="30" fill="#fdf4ff" opacity="0.1" />
-          {/* 5 Snow white garlic-like segments */}
+
+          {/* Shadow */}
+          <ellipse cx="80" cy="146" rx="46" ry="9" fill="#1c1917" opacity="0.14" />
+
+          {/* Sturdy green stem */}
+          <path d="M80 34 L80 18" stroke="#3f6212" strokeWidth="7" strokeLinecap="round" />
+
+          {/* Main royal purple sphere */}
+          <g filter="url(#mangosteenShadow)">
+            <circle cx="80" cy="90" r="50" fill="url(#mangosteenRindGrad)" />
+
+            {/* Thick velvety 4-lobed green calyx sepals */}
+            <ellipse cx="64" cy="42" rx="15" ry="10" fill="#65a30d" stroke="#365314" strokeWidth="1" transform="rotate(-20 64 42)" />
+            <ellipse cx="96" cy="42" rx="15" ry="10" fill="#4d7c0f" stroke="#365314" strokeWidth="1" transform="rotate(20 96 42)" />
+            <ellipse cx="78" cy="46" rx="14" ry="9" fill="#84cc16" stroke="#365314" strokeWidth="1" />
+            <ellipse cx="82" cy="38" rx="12" ry="8" fill="#3f6212" />
+          </g>
+
+          {/* Cut window displaying snow-white sweet garlic-like segments */}
+          <ellipse cx="80" cy="94" rx="28" ry="28" fill="#2e0538" stroke="#581c87" strokeWidth="1.5" />
+          {/* 5 Snow-white segments */}
           {[0, 72, 144, 216, 288].map((angle, i) => {
             const rad = (angle * Math.PI) / 180;
-            const cx = 80 + Math.cos(rad) * 11;
-            const cy = 90 + Math.sin(rad) * 11;
+            const cx = 80 + Math.cos(rad) * 10;
+            const cy = 94 + Math.sin(rad) * 10;
             return (
               <ellipse
                 key={i}
                 cx={cx}
                 cy={cy}
-                rx="8"
-                ry="12"
-                fill="url(#segmentWhite)"
+                rx="7.5"
+                ry="11.5"
+                fill="url(#cloveWhiteGrad)"
                 stroke="#e2e8f0"
-                strokeWidth="0.8"
+                strokeWidth="0.6"
                 transform={`rotate(${angle} ${cx} ${cy})`}
               />
             );
           })}
+          <circle cx="80" cy="94" r="2.5" fill="#e2e8f0" />
+
+          {/* Glossy specular highlight on purple rind */}
+          <ellipse cx="56" cy="74" rx="12" ry="22" transform="rotate(-30 56 74)" fill="#ffffff" opacity="0.32" />
+          <circle cx="48" cy="64" r="4" fill="#ffffff" opacity="0.5" />
         </svg>
       );
 
@@ -345,30 +695,58 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Chôm chôm 红毛丹">
           <defs>
-            <radialGradient id="rambutanBody" cx="40%" cy="40%" r="60%">
+            <radialGradient id="rambutanBodyGrad" cx="38%" cy="32%" r="68%">
               <stop offset="0%" stopColor="#f87171" />
-              <stop offset="70%" stopColor="#dc2626" />
-              <stop offset="100%" stopColor="#991b1b" />
+              <stop offset="40%" stopColor="#ef4444" />
+              <stop offset="75%" stopColor="#b91c1c" />
+              <stop offset="100%" stopColor="#7f1d1d" />
             </radialGradient>
+            <radialGradient id="rambutanPulp" cx="40%" cy="35%" r="65%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="80%" stopColor="#f1f5f9" />
+              <stop offset="100%" stopColor="#cbd5e1" />
+            </radialGradient>
+            <filter id="rambutanShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#7f1d1d" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="142" rx="42" ry="8" fill="#000" opacity="0.08" />
-          {/* Soft Hair Spines (Hairy spines around) */}
-          {[
-            'M80 42 Q80 18 86 16', 'M95 46 Q112 24 118 26', 'M110 58 Q135 44 140 50',
-            'M118 78 Q144 76 146 84', 'M115 98 Q142 108 138 116', 'M104 115 Q125 134 118 140',
-            'M80 124 Q82 146 76 148', 'M56 115 Q35 134 42 140', 'M45 98 Q18 108 22 116',
-            'M42 78 Q16 76 14 84', 'M50 58 Q25 44 20 50', 'M65 46 Q48 24 42 26'
-          ].map((d, i) => (
-            <path key={i} d={d} stroke="#84cc16" strokeWidth="3" strokeLinecap="round" fill="none" />
-          ))}
-          {/* Main red sphere */}
-          <circle cx="80" cy="84" r="40" fill="url(#rambutanBody)" />
-          {/* Surface hairs */}
-          {[
-            [70, 70], [90, 72], [65, 88], [85, 92], [76, 104]
-          ].map(([cx, cy], i) => (
-            <path key={i} d={`M${cx} ${cy} Q${cx + 8} ${cy - 12} ${cx + 14} ${cy - 10}`} stroke="#facc15" strokeWidth="2.2" strokeLinecap="round" fill="none" />
-          ))}
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="146" rx="44" ry="8" fill="#1c1917" opacity="0.12" />
+
+          {/* Dense soft curved spines around the shell */}
+          <g filter="url(#rambutanShadow)">
+            {[
+              'M80 44 Q76 16 88 12', 'M96 46 Q118 20 126 24', 'M112 56 Q142 38 146 46',
+              'M122 76 Q152 72 154 82', 'M120 98 Q150 108 144 118', 'M108 116 Q130 140 122 146',
+              'M80 126 Q84 152 74 154', 'M54 116 Q30 140 38 146', 'M42 98 Q12 108 18 118',
+              'M38 76 Q8 72 10 82', 'M48 56 Q18 38 24 46', 'M64 46 Q42 20 48 24'
+            ].map((d, i) => (
+              <path key={i} d={d} stroke="#84cc16" strokeWidth="3.2" strokeLinecap="round" fill="none" />
+            ))}
+
+            {/* Inner red sphere */}
+            <circle cx="80" cy="86" r="42" fill="url(#rambutanBodyGrad)" />
+
+            {/* Surface hairs */}
+            {[
+              [68, 66, 12, -14], [92, 68, 14, -10], [60, 88, 16, -8],
+              [84, 94, 15, -12], [74, 110, 14, -6], [98, 104, 12, -10]
+            ].map(([cx, cy, dx, dy], i) => (
+              <path
+                key={i}
+                d={`M${cx} ${cy} Q${cx + dx} ${cy + dy} ${cx + dx * 1.5} ${cy + dy * 0.8}`}
+                stroke="#facc15"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+              />
+            ))}
+          </g>
+
+          {/* Peeled window displaying sweet glistening white jelly aril */}
+          <ellipse cx="80" cy="86" rx="20" ry="24" fill="url(#rambutanPulp)" stroke="#991b1b" strokeWidth="1.2" />
+          <ellipse cx="76" cy="80" rx="6" ry="10" transform="rotate(-15 76 80)" fill="#ffffff" opacity="0.65" />
         </svg>
       );
 
@@ -376,31 +754,47 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Bơ 牛油果">
           <defs>
-            <radialGradient id="avocadoFlesh" cx="50%" cy="60%" r="50%">
+            {/* Buttery smooth avocado flesh gradient */}
+            <radialGradient id="avocadoFleshGrad" cx="50%" cy="62%" r="52%">
               <stop offset="0%" stopColor="#fef08a" />
-              <stop offset="65%" stopColor="#a3e635" />
-              <stop offset="100%" stopColor="#65a30d" />
+              <stop offset="45%" stopColor="#d9f99d" />
+              <stop offset="75%" stopColor="#84cc16" />
+              <stop offset="100%" stopColor="#3f6212" />
             </radialGradient>
-            <radialGradient id="avocadoSeed" cx="35%" cy="35%" r="65%">
+            {/* Glossy round wooden brown pit / seed */}
+            <radialGradient id="avocadoPitGrad" cx="35%" cy="30%" r="68%">
               <stop offset="0%" stopColor="#a16207" />
-              <stop offset="70%" stopColor="#713f12" />
-              <stop offset="100%" stopColor="#451a03" />
+              <stop offset="40%" stopColor="#713f12" />
+              <stop offset="80%" stopColor="#451a03" />
+              <stop offset="100%" stopColor="#1c0a00" />
             </radialGradient>
+            <filter id="avocadoShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#1e3a1e" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="144" rx="42" ry="9" fill="#000" opacity="0.08" />
-          {/* Pear-shaped outer skin */}
-          <path
-            d="M80 24 C64 24 52 42 50 64 C48 80 34 94 34 110 C34 130 54 144 80 144 C106 144 126 130 126 110 C126 94 112 80 110 64 C108 42 96 24 80 24 Z"
-            fill="#1e3a1e"
-          />
-          {/* Inner creamy flesh */}
-          <path
-            d="M80 30 C66 30 56 46 54 66 C52 82 40 96 40 110 C40 127 58 138 80 138 C102 138 120 127 120 110 C120 96 108 82 106 66 C104 46 94 30 80 30 Z"
-            fill="url(#avocadoFlesh)"
-          />
-          {/* Large brown seed */}
-          <circle cx="80" cy="106" r="22" fill="url(#avocadoSeed)" />
-          <circle cx="73" cy="99" r="5" fill="#ffffff" opacity="0.3" />
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="146" rx="44" ry="9" fill="#1c1917" opacity="0.14" />
+
+          {/* Hass Avocado Pear-Shaped Body */}
+          <g filter="url(#avocadoShadow)">
+            {/* Dark pebbly alligator skin rim */}
+            <path
+              d="M80 22 C64 22 50 42 48 64 C46 80 32 96 32 114 C32 134 52 146 80 146 C108 146 128 134 128 114 C128 96 114 80 112 64 C110 42 96 22 80 22 Z"
+              fill="#1e3a1e"
+            />
+            {/* Creamy rich edible flesh */}
+            <path
+              d="M80 28 C66 28 54 46 52 66 C50 82 38 98 38 114 C38 130 56 140 80 140 C104 140 122 130 122 114 C122 98 110 82 108 66 C106 46 94 28 80 28 Z"
+              fill="url(#avocadoFleshGrad)"
+            />
+
+            {/* Smooth giant round brown seed */}
+            <circle cx="80" cy="110" r="23" fill="url(#avocadoPitGrad)" />
+            {/* Specular curved reflection on the pit */}
+            <ellipse cx="73" cy="102" rx="7" ry="4" transform="rotate(-30 73 102)" fill="#ffffff" opacity="0.45" />
+            <circle cx="71" cy="100" r="2.5" fill="#ffffff" opacity="0.8" />
+          </g>
         </svg>
       );
 
@@ -408,30 +802,61 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả dứa 菠萝">
           <defs>
-            <radialGradient id="pineappleBody" cx="45%" cy="45%" r="55%">
-              <stop offset="0%" stopColor="#fde047" />
+            {/* Golden pineapple body */}
+            <radialGradient id="pineBodyGrad" cx="45%" cy="40%" r="65%">
+              <stop offset="0%" stopColor="#fef08a" />
+              <stop offset="35%" stopColor="#facc15" />
               <stop offset="70%" stopColor="#eab308" />
-              <stop offset="100%" stopColor="#a16207" />
+              <stop offset="90%" stopColor="#ca8a04" />
+              <stop offset="100%" stopColor="#854d0e" />
             </radialGradient>
+            <filter id="pineShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#854d0e" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="144" rx="40" ry="8" fill="#000" opacity="0.08" />
-          {/* Pineapple body */}
-          <rect x="44" y="52" width="72" height="84" rx="36" fill="url(#pineappleBody)" />
-          {/* Cross hatch pattern */}
-          <g stroke="#854d0e" strokeWidth="2" opacity="0.6">
-            <line x1="48" y1="72" x2="108" y2="128" />
-            <line x1="48" y1="94" x2="94" y2="136" />
-            <line x1="60" y1="56" x2="114" y2="108" />
-            <line x1="112" y1="72" x2="52" y2="128" />
-            <line x1="112" y1="94" x2="66" y2="136" />
-            <line x1="100" y1="56" x2="46" y2="108" />
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="146" rx="42" ry="9" fill="#1c1917" opacity="0.14" />
+
+          {/* Spiky crown of layered sword-shaped leaves at top */}
+          <g>
+            <path d="M80 54 L80 10 L70 32 Z" fill="#15803d" />
+            <path d="M80 54 L54 18 L64 38 Z" fill="#22c55e" />
+            <path d="M80 54 L106 18 L96 38 Z" fill="#16a34a" />
+            <path d="M80 54 L38 30 L52 46 Z" fill="#4ade80" />
+            <path d="M80 54 L122 30 L108 46 Z" fill="#15803d" />
+            <path d="M80 54 L44 48 L58 56 Z" fill="#16a34a" />
+            <path d="M80 54 L116 48 L102 56 Z" fill="#22c55e" />
           </g>
-          {/* Crown leaves */}
-          <path d="M80 54 L80 12 L72 32 Z" fill="#15803d" />
-          <path d="M80 54 L60 20 L66 40 Z" fill="#22c55e" />
-          <path d="M80 54 L100 20 L94 40 Z" fill="#16a34a" />
-          <path d="M80 54 L44 32 L56 46 Z" fill="#4ade80" />
-          <path d="M80 54 L116 32 L104 46 Z" fill="#15803d" />
+
+          {/* Barrel pineapple body with textured diamond eyes */}
+          <g filter="url(#pineShadow)">
+            <rect x="42" y="52" width="76" height="86" rx="38" fill="url(#pineBodyGrad)" />
+
+            {/* Geometric diamond scale pattern (mắt dứa) */}
+            <g stroke="#713f12" strokeWidth="1.8" opacity="0.65">
+              <line x1="48" y1="72" x2="110" y2="128" />
+              <line x1="48" y1="92" x2="98" y2="136" />
+              <line x1="62" y1="56" x2="114" y2="108" />
+              <line x1="112" y1="72" x2="50" y2="128" />
+              <line x1="112" y1="92" x2="62" y2="136" />
+              <line x1="98" y1="56" x2="46" y2="108" />
+            </g>
+
+            {/* Little brown bract eye center spikes in each diamond */}
+            {[
+              [80, 72], [65, 84], [95, 84], [80, 96],
+              [65, 108], [95, 108], [80, 120]
+            ].map(([cx, cy], i) => (
+              <g key={i}>
+                <polygon points={`${cx},${cy - 3} ${cx + 3},${cy + 2} ${cx - 3},${cy + 2}`} fill="#78350f" />
+                <circle cx={cx} cy={cy} r="1" fill="#fef08a" />
+              </g>
+            ))}
+          </g>
+
+          {/* Glossy light reflection on left barrel side */}
+          <path d="M52 68 C48 82 50 110 56 122" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.4" />
         </svg>
       );
 
@@ -439,36 +864,54 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả vải 荔枝">
           <defs>
-            <radialGradient id="lycheeShell" cx="40%" cy="35%" r="65%">
-              <stop offset="0%" stopColor="#f87171" />
-              <stop offset="70%" stopColor="#dc2626" />
+            {/* Textured crimson-rose shell */}
+            <radialGradient id="lycheeShellGrad" cx="38%" cy="32%" r="68%">
+              <stop offset="0%" stopColor="#fb7185" />
+              <stop offset="40%" stopColor="#e11d48" />
+              <stop offset="75%" stopColor="#be123c" />
               <stop offset="100%" stopColor="#881337" />
             </radialGradient>
-            <radialGradient id="lycheePulp" cx="40%" cy="40%" r="60%">
+            {/* Glistening pearly-white translucent aril pulp */}
+            <radialGradient id="lycheeArilGrad" cx="35%" cy="32%" r="68%">
               <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="70%" stopColor="#f1f5f9" />
-              <stop offset="100%" stopColor="#cbd5e1" />
+              <stop offset="65%" stopColor="#f8fafc" />
+              <stop offset="85%" stopColor="#e2e8f0" />
+              <stop offset="100%" stopColor="#94a3b8" />
             </radialGradient>
+            <filter id="lycheeShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#881337" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="142" rx="42" ry="8" fill="#000" opacity="0.08" />
-          {/* Leaves and stem */}
-          <path d="M80 40 Q84 20 80 14" stroke="#713f12" strokeWidth="4" strokeLinecap="round" fill="none" />
-          <path d="M82 24 Q105 14 116 26 Q98 34 82 24 Z" fill="#16a34a" />
-          {/* Bumpy shell round fruit */}
-          <circle cx="80" cy="88" r="46" fill="url(#lycheeShell)" />
-          {/* Textured pebble bumps */}
-          <g fill="#991b1b" opacity="0.5">
-            {[
-              [60, 60], [78, 56], [98, 62],
-              [48, 80], [66, 78], [88, 82], [108, 80],
-              [56, 102], [76, 106], [98, 104]
-            ].map(([cx, cy], i) => (
-              <circle key={i} cx={cx} cy={cy} r="3" />
-            ))}
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="146" rx="44" ry="8" fill="#1c1917" opacity="0.12" />
+
+          {/* Stem and rich green leaf */}
+          <path d="M80 38 C82 22 80 14 86 10" stroke="#543310" strokeWidth="4.5" strokeLinecap="round" fill="none" />
+          <path d="M84 26 C108 14 122 24 124 36 C108 42 94 36 84 26 Z" fill="#15803d" />
+          <path d="M85 26 Q106 24 120 34" stroke="#86efac" strokeWidth="1" fill="none" opacity="0.7" />
+
+          {/* Round bumpy textured shell */}
+          <g filter="url(#lycheeShadow)">
+            <circle cx="80" cy="88" r="48" fill="url(#lycheeShellGrad)" />
+
+            {/* Authentic pebbled nodular surface bumps */}
+            <g fill="#9f1239" opacity="0.5">
+              {[
+                [56, 62], [74, 56], [96, 60], [112, 70],
+                [46, 82], [64, 78], [116, 84],
+                [52, 102], [70, 114], [94, 116], [110, 104]
+              ].map(([cx, cy], i) => (
+                <circle key={i} cx={cx} cy={cy} r="3.5" />
+              ))}
+            </g>
           </g>
-          {/* Partially peeled window showing glistening white pulp */}
-          <ellipse cx="86" cy="86" rx="20" ry="24" fill="url(#lycheePulp)" stroke="#991b1b" strokeWidth="1.5" />
-          <circle cx="82" cy="80" r="4" fill="#ffffff" opacity="0.6" />
+
+          {/* Peeled section showing dew-covered pearly translucent pulp */}
+          <ellipse cx="88" cy="88" rx="24" ry="28" fill="url(#lycheeArilGrad)" stroke="#be123c" strokeWidth="1.5" />
+          {/* Glistening highlights on pearly aril */}
+          <ellipse cx="82" cy="80" rx="7" ry="12" transform="rotate(-15 82 80)" fill="#ffffff" opacity="0.7" />
+          <circle cx="80" cy="74" r="3" fill="#ffffff" opacity="0.9" />
         </svg>
       );
 
@@ -476,22 +919,45 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả nhãn 龙眼">
           <defs>
-            <radialGradient id="longanShell" cx="35%" cy="35%" r="65%">
-              <stop offset="0%" stopColor="#d6d3d1" />
-              <stop offset="40%" stopColor="#b45309" />
-              <stop offset="100%" stopColor="#78350f" />
+            {/* Tan ochre shell */}
+            <radialGradient id="longanShellGrad" cx="35%" cy="32%" r="68%">
+              <stop offset="0%" stopColor="#e7e5e4" />
+              <stop offset="35%" stopColor="#d6d3d1" />
+              <stop offset="70%" stopColor="#a8a29e" />
+              <stop offset="90%" stopColor="#78716c" />
+              <stop offset="100%" stopColor="#57534e" />
             </radialGradient>
+            {/* Glass-like translucent pulp */}
+            <radialGradient id="longanPulpGrad" cx="35%" cy="32%" r="68%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="70%" stopColor="#f8fafc" />
+              <stop offset="90%" stopColor="#e2e8f0" />
+              <stop offset="100%" stopColor="#cbd5e1" />
+            </radialGradient>
+            <filter id="longanShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#57534e" floodOpacity="0.25" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="142" rx="40" ry="8" fill="#000" opacity="0.08" />
-          {/* Branch */}
-          <path d="M80 34 L80 18" stroke="#78350f" strokeWidth="4" strokeLinecap="round" />
-          {/* Round tan sphere */}
-          <circle cx="80" cy="84" r="44" fill="url(#longanShell)" stroke="#78350f" strokeWidth="1.2" />
-          {/* Peeled window displaying dragon eye (translucent pulp & black seed) */}
-          <circle cx="80" cy="84" r="25" fill="#f8fafc" stroke="#b45309" strokeWidth="1.5" />
-          {/* Black dragon eye pupil */}
-          <circle cx="80" cy="84" r="11" fill="#0f172a" />
-          <circle cx="76" cy="80" r="3" fill="#ffffff" />
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="146" rx="42" ry="8" fill="#1c1917" opacity="0.12" />
+
+          {/* Branch & twig node */}
+          <path d="M80 34 L80 14" stroke="#78350f" strokeWidth="4.5" strokeLinecap="round" />
+
+          {/* Main Longan fruit */}
+          <g filter="url(#longanShadow)">
+            <circle cx="80" cy="86" r="46" fill="url(#longanShellGrad)" stroke="#78716c" strokeWidth="0.8" />
+          </g>
+
+          {/* Peeled window displaying the famous "Dragon Eye" */}
+          <circle cx="80" cy="86" r="28" fill="url(#longanPulpGrad)" stroke="#a8a29e" strokeWidth="1.2" />
+
+          {/* Pitch-black seed pupil glowing from within */}
+          <circle cx="80" cy="86" r="13" fill="#09090b" />
+          {/* Specular eye white light pearl */}
+          <circle cx="76" cy="82" r="4.5" fill="#ffffff" />
+          <circle cx="82" cy="89" r="1.5" fill="#ffffff" opacity="0.8" />
         </svg>
       );
 
@@ -499,22 +965,36 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả bưởi 柚子">
           <defs>
-            <radialGradient id="pomeloGrad" cx="40%" cy="35%" r="65%">
+            {/* Large pear-shaped celadon/golden pomelo skin */}
+            <radialGradient id="pomeloSkinGrad" cx="38%" cy="30%" r="70%">
               <stop offset="0%" stopColor="#fef08a" />
-              <stop offset="50%" stopColor="#bef264" />
-              <stop offset="100%" stopColor="#65a30d" />
+              <stop offset="40%" stopColor="#d9f99d" />
+              <stop offset="75%" stopColor="#a3e635" />
+              <stop offset="92%" stopColor="#65a30d" />
+              <stop offset="100%" stopColor="#3f6212" />
             </radialGradient>
+            <filter id="pomeloShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#3f6212" floodOpacity="0.22" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="144" rx="50" ry="10" fill="#000" opacity="0.08" />
-          {/* Large drop / teardrop shape */}
-          <path d="M80 24 Q80 14 84 12" stroke="#713f12" strokeWidth="5" strokeLinecap="round" fill="none" />
-          <path d="M80 22 Q98 12 106 22 Q94 30 80 22 Z" fill="#16a34a" />
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="146" rx="52" ry="10" fill="#1c1917" opacity="0.12" />
+
+          {/* Stem & leaf */}
+          <path d="M80 24 C81 14 86 10 90 8" stroke="#543310" strokeWidth="5" strokeLinecap="round" fill="none" />
+          <path d="M84 20 C106 10 120 20 122 30 C106 36 94 30 84 20 Z" fill="#15803d" />
+
+          {/* Big pear-shaped body */}
           <path
-            d="M80 26 C62 26 52 46 44 70 C34 98 42 138 80 138 C118 138 126 98 116 70 C108 46 98 26 80 26 Z"
-            fill="url(#pomeloGrad)"
+            d="M80 24 C62 24 50 44 42 70 C32 98 40 142 80 142 C120 142 128 98 118 70 C110 44 98 24 80 24 Z"
+            fill="url(#pomeloSkinGrad)"
+            filter="url(#pomeloShadow)"
           />
-          {/* Soft shine */}
-          <ellipse cx="65" cy="74" rx="14" ry="30" transform="rotate(-20 65 74)" fill="#ffffff" opacity="0.3" />
+
+          {/* Glossy sheen */}
+          <ellipse cx="64" cy="74" rx="14" ry="32" transform="rotate(-20 64 74)" fill="#ffffff" opacity="0.32" />
+          <circle cx="56" cy="62" r="5" fill="#ffffff" opacity="0.5" />
         </svg>
       );
 
@@ -522,44 +1002,65 @@ export const FruitIllustration: React.FC<FruitIllustrationProps> = ({ id, classN
       return (
         <svg viewBox="0 0 160 160" style={{ width: dimension, height: dimension }} className={className} aria-label="Quả đu đủ 木瓜">
           <defs>
-            <radialGradient id="papayaSkin" cx="40%" cy="40%" r="60%">
-              <stop offset="0%" stopColor="#fde047" />
-              <stop offset="70%" stopColor="#ea580c" />
-              <stop offset="100%" stopColor="#ca8a04" />
+            {/* Elongated tropical papaya skin */}
+            <radialGradient id="papayaSkinGrad" cx="38%" cy="35%" r="68%">
+              <stop offset="0%" stopColor="#fef08a" />
+              <stop offset="35%" stopColor="#fde047" />
+              <stop offset="70%" stopColor="#f97316" />
+              <stop offset="90%" stopColor="#ea580c" />
+              <stop offset="100%" stopColor="#9a3412" />
             </radialGradient>
-            <radialGradient id="papayaFlesh" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#fb923c" />
-              <stop offset="80%" stopColor="#ea580c" />
+            {/* Juicy salmon-orange flesh */}
+            <radialGradient id="papayaFleshGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#fdba74" />
+              <stop offset="60%" stopColor="#fb923c" />
+              <stop offset="85%" stopColor="#f97316" />
               <stop offset="100%" stopColor="#c2410c" />
             </radialGradient>
+            <filter id="papayaShadow" x="-15%" y="-15%" width="130%" height="135%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#7c2d12" floodOpacity="0.22" />
+            </filter>
           </defs>
-          <ellipse cx="80" cy="144" rx="44" ry="8" fill="#000" opacity="0.08" />
-          {/* Elongated pear body */}
-          <path
-            d="M80 26 C64 26 54 44 50 68 C46 96 40 138 80 138 C120 138 114 96 110 68 C106 44 96 26 80 26 Z"
-            fill="url(#papayaSkin)"
-          />
-          {/* Half sliced cavity */}
-          <path
-            d="M80 50 C68 50 60 70 60 92 C60 114 68 126 80 126 C92 126 100 114 100 92 C100 70 92 50 80 50 Z"
-            fill="url(#papayaFlesh)"
-            stroke="#9a3412"
-            strokeWidth="1.2"
-          />
-          {/* Black glistening seeds inside cavity */}
+
+          {/* Cast shadow */}
+          <ellipse cx="80" cy="146" rx="46" ry="9" fill="#1c1917" opacity="0.12" />
+
+          {/* Body */}
+          <g filter="url(#papayaShadow)">
+            <path
+              d="M80 24 C64 24 52 44 48 70 C44 100 40 142 80 142 C120 142 116 100 112 70 C108 44 96 24 80 24 Z"
+              fill="url(#papayaSkinGrad)"
+            />
+
+            {/* Sliced center cavity revealing glistening black seeds */}
+            <path
+              d="M80 48 C68 48 58 70 58 94 C58 118 68 128 80 128 C92 128 102 118 102 94 C102 70 92 48 80 48 Z"
+              fill="url(#papayaFleshGrad)"
+              stroke="#9a3412"
+              strokeWidth="1.2"
+            />
+          </g>
+
+          {/* Caviar-like shiny black seeds in center pocket */}
           {[
-            [76, 75], [84, 76], [74, 88], [82, 86], [88, 90],
-            [75, 100], [83, 102], [78, 112], [84, 114]
+            [74, 70], [86, 72], [72, 82], [80, 80], [88, 84],
+            [74, 94], [82, 92], [88, 96], [76, 106], [84, 108], [80, 116]
           ].map(([cx, cy], i) => (
-            <circle key={i} cx={cx} cy={cy} r="2.2" fill="#09090b" />
+            <g key={i}>
+              <circle cx={cx} cy={cy} r="2.5" fill="#09090b" />
+              <circle cx={cx - 0.7} cy={cy - 0.7} r="0.8" fill="#ffffff" />
+            </g>
           ))}
+
+          {/* Gloss */}
+          <ellipse cx="58" cy="72" rx="8" ry="24" transform="rotate(-15 58 72)" fill="#ffffff" opacity="0.35" />
         </svg>
       );
 
     default:
       return (
         <div style={{ width: dimension, height: dimension }} className={`flex items-center justify-center bg-amber-100 rounded-2xl text-4xl ${className}`}>
-          🍉
+          🍎
         </div>
       );
   }
